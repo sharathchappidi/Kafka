@@ -1,0 +1,8 @@
+---
+# defaults file for kafka
+kafka_download_timeout_seconds: 600
+kafka_install_parent_dir: /srv/kafka
+
+kafka_mirror : http://apache.mirrors.hoobly.com/kafka/
+kafka_scala_ver : '2.11'
+kafka_ver : 0.10.2.1

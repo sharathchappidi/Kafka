@@ -1,0 +1,15 @@
+---
+# vars file for kafka
+kafka_user: kafka
+kafka_group: kafka
+kafka_name : 'kafka_{{kafka_scala_ver}}-{{kafka_ver}}'
+kafka_tgz : '{{kafka_name}}.tgz'
+kafka_tgz_url : '{{kafka_mirror}}/{{kafka_ver}}/{{kafka_tgz}}'
+kafka_checksum: '{{kafka_checksums[kafka_ver][kafka_scala_ver]}}'
+
+kafka_install_dir: '{{kafka_install_parent_dir}}/{{kafka_ver}}'
+kafka_install_link_dir: '{{kafka_install_parent_dir}}/kafka'
+kafka_data_dir: /var/lib/kafka
+kafka_properties: /etc/kafka
+kafka_services: /etc/systemd/system
+kafka_log: /kafka
