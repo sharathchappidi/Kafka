@@ -1,0 +1,93 @@
+---
+- name: Fetch Java version
+  shell: ./test.sh
+  register: result
+- debug: msg="{{result.stdout}}"
+
+- name: include file
+  include: stuff.yaml
+  when: result.stdout != '{{kafka_name}}'
+
+# tasks file for kafka
+#- name: Check if kafka user exists
+#  command: id {{kafka_user}}
+#  register: id_result
+#  ignore_errors: True
+#  changed_when: False
+#
+#- name: Create kafka user
+#  sudo: True
+#  user:
+#    name: "{{kafka_user}}"
+#    comment: "Service user for kafka"
+#    shell: /bin/false 
+#  when: id_result|failed
+#
+#- name: 'check for kafka installation..{{kafka_install_dir}}'
+#  become: yes
+#  stat:
+#    path: '{{kafka_install_dir}}'
+#  changed_when: false
+#  register: kafka_binary
+#- when: not kafka_binary.stat.exists
+#  block:
+#    - name: 'ensure {{kafka_install_parent_dir}} exists'
+#      become: yes
+#      become_user: root
+#      file:
+#        path: '{{item}}'
+#        state: directory
+#        owner: '{{kafka_user}}'
+#        group: '{{kafka_group}}'
+#        mode: '0755'
+#      with_items: 
+#        - '{{kafka_install_dir}}'
+#        - '{{kafka_properties}}'
+#        - '{{kafka_data_dir}}'
+#        - '{{kafka_log}}'
+#
+#    - name:  
+#      become: yes
+#      become_user: root
+#      get_url:
+#        url: '{{kafka_tgz_url}}'
+#        dest: /tmp/{{kafka_tgz}}
+#        mode: '0644'
+#        owner: '{{kafka_user}}'
+#        group: '{{kafka_group}}'
+#        timeout: '{{kafka_download_timeout_seconds}}'
+##        checksum: '{{kafka_checksum}}'
+#
+#    - name: unarchive...
+#      become: yes
+#      become_user: root
+#      unarchive:
+#        remote_src: yes
+#        src: /tmp/{{kafka_tgz}}
+#        dest: '{{kafka_install_dir}}'
+#        owner: '{{kafka_user}}'
+#        group: '{{kafka_group}}'
+#
+#  always:
+#    - name: delete archive...
+#      become: yes
+#      become_user: root
+#      file:
+#        path: /tmp/{{kafka_tgz}}
+#        state: absent
+#
+#    - name: link..
+#      shell: ln -s '{{kafka_install_dir}}' '{{kafka_install_parent_dir}}/current'
+#
+#    - template:
+#        src: '{{item.src}}'
+#        dest: '{{item.dest}}'
+#        owner: '{{item.user}}'
+#        group: '{{item.group}}'
+#      with_items:
+#        - { src: 'kafka.properties.j2', dest: '{{kafka_properties}}/kafka.properties', user: '{{kafka_user}}', group: '{{kafka_group}}' }
+#        - { src: 'kafka.service.j2', dest: '{{kafka_services}}/kafka.service', user: root, group: root } 
+
+
+
+
